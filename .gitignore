@@ -1,2 +1,3 @@
 # Default ignored files
-build/
+**/build
+/sandbox/.gradle
