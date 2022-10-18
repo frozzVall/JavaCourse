@@ -3,23 +3,26 @@ package ru.stqa.pft.sandbox;
 public class MyFirstProgram {
 
   public static void main(String[] args) {
-    hello("Lera");
+    /*hello("Lera");
     hello("Evgeniy");
-    double len = 5;
-    System.out.println("square area with side " + len + "=" + area(len));
-    double side1=4;
-    double side2=6;
-    System.out.println("area of a rectangle with sides  " + side1 +" and " + side2 + "=" + area(side1,side2));
+    Square s = new Square(5);
+    System.out.println("square area with side " + s.l + "=" + s.area());
+    Rectangle r= new Rectangle(4,6);
+    System.out.println("area of a rectangle with sides  " + r.a +" and " + r.b + "=" + r.area());*/
+    Point p1=new Point(-1,3);
+    Point p2=new Point(6,2);
+    System.out.println("Distance between two points:"+p2.distance(p1));
+
+
+
+
   }
+
 
   public static void hello(String somebody) {
     System.out.println("Hello, " + somebody + "!");
   }
 
-  public static double area(double I) {
-    return I * I;
+
   }
-  public static double area(double a, double b){
-    return a*b;
-  }
-}
+
