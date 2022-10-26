@@ -32,7 +32,7 @@ public class TestsForNewContacts {
   @Test
   public void testSForNewContacts() throws Exception {
     initNewContactsCreation();
-    fillContacts(new Contacts("liza", "dlogyv", "uliza gorelika", "+375291567859", "liza709@gmail.com"));
+    fillContactsForm(new ContactsForm("liza", "dlogyv", "uliza gorelika", "+375291567859", "liza709@gmail.com"));
     driver.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
     returnToHomePage();
   }
@@ -41,22 +41,22 @@ public class TestsForNewContacts {
     driver.findElement(By.linkText("home")).click();
   }
 
-  private void fillContacts(Contacts contacts) {
+  private void fillContactsForm(ContactsForm contactsForm) {
     driver.findElement(By.name("firstname")).click();
     driver.findElement(By.name("firstname")).clear();
-    driver.findElement(By.name("firstname")).sendKeys(contacts.getFirstName());
+    driver.findElement(By.name("firstname")).sendKeys(contactsForm.getFirstName());
     driver.findElement(By.name("lastname")).click();
     driver.findElement(By.name("lastname")).clear();
-    driver.findElement(By.name("lastname")).sendKeys(contacts.getLastName());
+    driver.findElement(By.name("lastname")).sendKeys(contactsForm.getLastName());
     driver.findElement(By.name("address")).click();
     driver.findElement(By.name("address")).clear();
-    driver.findElement(By.name("address")).sendKeys(contacts.getAddress());
+    driver.findElement(By.name("address")).sendKeys(contactsForm.getAddress());
     driver.findElement(By.name("mobile")).click();
     driver.findElement(By.name("mobile")).clear();
-    driver.findElement(By.name("mobile")).sendKeys(contacts.getNumber());
+    driver.findElement(By.name("mobile")).sendKeys(contactsForm.getNumber());
     driver.findElement(By.name("email")).click();
     driver.findElement(By.name("email")).clear();
-    driver.findElement(By.name("email")).sendKeys(contacts.getEmail());
+    driver.findElement(By.name("email")).sendKeys(contactsForm.getEmail());
   }
 
   private void initNewContactsCreation() {
