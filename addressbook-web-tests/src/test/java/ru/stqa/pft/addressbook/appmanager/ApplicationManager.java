@@ -9,6 +9,7 @@ public class ApplicationManager {
   public JavascriptExecutor js;
   private  NavigationHelper navigationHelper ;
   private  GroupHelper groupHelper;
+  private SessionHelper sessionHelper;
 
   public void init() {
     System.setProperty("webdriver.chrome.driver", "C:\\SeleniumDrivers\\chromedriver.exe");
@@ -16,19 +17,10 @@ public class ApplicationManager {
     js = (JavascriptExecutor) wd;
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);
-    login("admin","secret");
+    sessionHelper = new SessionHelper(wd);
+    sessionHelper.login("admin","secret");
   }
 
-  public void login(String usermane, String password) {
-    wd.get("http://localhost/addressbook/");
-    wd.findElement(By.name("user")).click();
-    wd.findElement(By.name("user")).clear();
-    wd.findElement(By.name("user")).sendKeys(usermane);
-    wd.findElement(By.name("pass")).click();
-    wd.findElement(By.name("pass")).clear();
-    wd.findElement(By.name("pass")).sendKeys(password);
-    wd.findElement(By.xpath("//input[@value='Login']")).click();
-  }
 
   public void stop() {
   wd.quit();
