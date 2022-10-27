@@ -6,8 +6,12 @@ import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 public class GroupHelper {
-  public WebDriver wd;
-  public JavascriptExecutor js;
+  private WebDriver wd;
+  private JavascriptExecutor js;
+
+  public GroupHelper(WebDriver wd) {
+    this.wd=wd;
+  }
 
   public void returnToGroupPage() {
     wd.findElement(By.linkText("groups")).click();
