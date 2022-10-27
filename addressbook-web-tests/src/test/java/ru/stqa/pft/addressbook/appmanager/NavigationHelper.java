@@ -12,7 +12,7 @@ public class NavigationHelper extends HelperBase{
   }
 
   public void gotoGroupPage() {
-    click(By.id("container"));
+    //click(By.id("container"));
     click(By.linkText("groups"));
   }
 
