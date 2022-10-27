@@ -4,20 +4,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
-public class NavigationHelper {
- private WebDriver wd;
-  private JavascriptExecutor js;
+public class NavigationHelper extends HelperBase{
+
 
   public NavigationHelper(WebDriver wd) {
-    this.wd=wd;
+    super(wd);
   }
 
   public void gotoGroupPage() {
-    wd.findElement(By.id("container")).click();
-    wd.findElement(By.linkText("groups")).click();
+    click(By.id("container"));
+    click(By.linkText("groups"));
   }
 
   public void returnToHomePage() {
-    wd.findElement(By.linkText("home")).click();
+    click(By.linkText("home"));
   }
 }

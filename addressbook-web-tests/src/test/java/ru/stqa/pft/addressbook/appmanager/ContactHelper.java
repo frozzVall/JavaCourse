@@ -1,38 +1,25 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.Contacts;
 
-public class ContactHelper {
-  private WebDriver wd;
-  private JavascriptExecutor js;
+public class ContactHelper extends HelperBase {
 
   public ContactHelper(WebDriver wd) {
-    this.wd=wd;
+    super(wd);
   }
 
   public void fillContacts(Contacts contactsForm) {
-    wd.findElement(By.name("firstname")).click();
-    wd.findElement(By.name("firstname")).clear();
-    wd.findElement(By.name("firstname")).sendKeys(contactsForm.getFirstName());
-    wd.findElement(By.name("lastname")).click();
-    wd.findElement(By.name("lastname")).clear();
-    wd.findElement(By.name("lastname")).sendKeys(contactsForm.getLastName());
-    wd.findElement(By.name("address")).click();
-    wd.findElement(By.name("address")).clear();
-    wd.findElement(By.name("address")).sendKeys(contactsForm.getAddress());
-    wd.findElement(By.name("mobile")).click();
-    wd.findElement(By.name("mobile")).clear();
-    wd.findElement(By.name("mobile")).sendKeys(contactsForm.getNumber());
-    wd.findElement(By.name("email")).click();
-    wd.findElement(By.name("email")).clear();
-    wd.findElement(By.name("email")).sendKeys(contactsForm.getEmail());
-    wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+    type(By.name("firstname"), contactsForm.getFirstName());
+    type(By.name("lastname"), contactsForm.getLastName());
+    type(By.name("address"), contactsForm.getAddress());
+    type(By.name("mobile"), contactsForm.getNumber());
+    type(By.name("email"), contactsForm.getEmail());
+    click(By.xpath("//div[@id='content']/form/input[21]"));
   }
 
   public void initNewContactsCreation() {
-    wd.findElement(By.linkText("add new")).click();
+    click(By.linkText("add new"));
   }
 }
