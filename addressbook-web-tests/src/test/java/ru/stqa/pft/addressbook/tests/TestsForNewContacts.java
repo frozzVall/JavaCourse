@@ -12,7 +12,6 @@ public class TestsForNewContacts extends TestBase {
   public void testSForNewContacts() throws Exception {
     app.initNewContactsCreation();
     app.fillContacts(new Contacts("liza", "dlogyv", "uliza gorelika", "+375291567859", "liza709@gmail.com"));
-    app.wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
     app.returnToHomePage();
   }
 }
