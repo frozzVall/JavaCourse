@@ -32,7 +32,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void selectContactsForDeletion() {
-    wd.findElement(By.id("7")).click();
+    wd.findElement(By.name("selected[]")).click();
   }
 
   public void initContactsDeletion() {
