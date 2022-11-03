@@ -5,7 +5,7 @@ import ru.stqa.pft.addressbook.model.Contacts;
 
 public class ContactsDeletionTests extends TestBase {
   @Test
-  public void testContactsDeletion(){
+  public void testContactsDeletion() {
     app.getContactHelper().selectContactsForDeletion();
     app.getContactHelper().initContactsDeletion();
     app.getContactHelper().submitContactsDeletion();
