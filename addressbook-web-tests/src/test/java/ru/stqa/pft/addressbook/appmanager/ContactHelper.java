@@ -18,12 +18,12 @@ public class ContactHelper extends HelperBase {
     type(By.name("address"), contactsForm.getAddress());
     type(By.name("mobile"), contactsForm.getNumber());
     type(By.name("email"), contactsForm.getEmail());
-    click(By.xpath("//div[@id='content']/form/input[21]"));
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactsForm.getGroup());
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
+    click(By.xpath("//div[@id='content']/form/input[21]"));
   }
 
   public void initNewContactsCreation() {
@@ -53,7 +53,7 @@ public class ContactHelper extends HelperBase {
 
   public void createContact(Contacts contacts) {
    initNewContactsCreation();
-   fillContacts(contacts,false);
+   fillContacts(contacts,true);
   }
 
   public boolean isThereAContact() {
