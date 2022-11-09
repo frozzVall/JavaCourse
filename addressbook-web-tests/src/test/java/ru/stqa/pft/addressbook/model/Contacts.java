@@ -38,6 +38,7 @@ public class Contacts {
   }
 
   public String getGroup() {
+
     return group;
   }
 }

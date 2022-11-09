@@ -19,7 +19,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("mobile"), contactsForm.getNumber());
     type(By.name("email"), contactsForm.getEmail());
     if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactsForm.getGroup());
+      new Select(wd.findElement(By.name("new_group"))).selectByIndex(1);
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
