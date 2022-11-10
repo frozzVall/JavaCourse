@@ -2,9 +2,14 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -30,16 +35,16 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void initContactsModification() {
-    click(By.xpath("//img[@alt='Edit']"));
+  public void initContactsModification(int index) {
+    wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
   }
 
   public void submitContactsModification() {
     click((By.name("update")));
   }
 
-  public void selectContactsForDeletion() {
-    wd.findElement(By.name("selected[]")).click();
+  public void selectContactsForDeletion(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void initContactsDeletion() {
@@ -58,5 +63,19 @@ public class ContactHelper extends HelperBase {
 
   public boolean isThereAContact() {
     return isElementPresent(By.name("selected[]"));
+  }
+
+  public List<Contacts> getContactList() {
+    List <Contacts> contacts =new ArrayList<Contacts>();
+    List <WebElement> tableRows = wd.findElements(By.cssSelector("tbody tr[name=\"entry\"]"));
+
+    for (WebElement tableRow: tableRows ){
+      String lastName = tableRow.findElement(By.cssSelector("td:nth-child(2)")).getText();
+      String firstName = tableRow.findElement(By.cssSelector("td:nth-child(3)")).getText();
+      Contacts contact = new Contacts(firstName,lastName,null,null,null,null);
+      contacts.add(contact);
+    }
+    return contacts;
+
   }
 }
