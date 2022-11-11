@@ -71,11 +71,12 @@ public class ContactHelper extends HelperBase {
     for (WebElement tableRow: tableRows ){
       String lastName = tableRow.findElement(By.cssSelector("td:nth-child(2)")).getText();
       String firstName = tableRow.findElement(By.cssSelector("td:nth-child(3)")).getText();
-      String id = tableRow.findElement(By.tagName("input")).getAttribute("value");
+      int id = Integer.parseInt(tableRow.findElement(By.tagName("input")).getAttribute("value"));
       Contacts contact = new Contacts(id,firstName,lastName,null,null,null,null);
       contacts.add(contact);
     }
     return contacts;
 
   }
+
 }

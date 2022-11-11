@@ -4,6 +4,8 @@ import org.openqa.selenium.remote.Browser;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
+import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 import sun.plugin2.util.BrowserType;
 
 public class TestBase {
@@ -19,5 +21,4 @@ public class TestBase {
   public void tearDown() throws Exception {
     app.stop();
   }
-
 }
