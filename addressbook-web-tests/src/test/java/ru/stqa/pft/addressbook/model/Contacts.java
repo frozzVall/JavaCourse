@@ -12,33 +12,6 @@ public class Contacts {
 
   private final String id;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    Contacts contacts = (Contacts) o;
-
-    if (!Objects.equals(firstName, contacts.firstName)) return false;
-    return Objects.equals(lastName, contacts.lastName);
-  }
-
-  @Override
-  public int hashCode() {
-    int result = firstName != null ? firstName.hashCode() : 0;
-    result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-    return result;
-  }
-
-  @Override
-  public String toString() {
-    return "Contacts{" +
-            "firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            '}';
-  }
-
-
 
   public Contacts(String id, String firstName, String lastName, String address, String number, String email, String group) {
     this.id=id;
@@ -50,7 +23,40 @@ public class Contacts {
     this.group = group;
   }
 
-  public Contacts( String firstName, String lastName, String address, String number, String email, String group) {
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Contacts contacts = (Contacts) o;
+
+    if (!Objects.equals(firstName, contacts.firstName)) return false;
+    if (!Objects.equals(lastName, contacts.lastName)) return false;
+    return Objects.equals(id, contacts.id);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = firstName != null ? firstName.hashCode() : 0;
+    result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+    result = 31 * result + (id != null ? id.hashCode() : 0);
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    return "Contacts{" +
+            "firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", id='" + id + '\'' +
+            '}';
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public Contacts(String firstName, String lastName, String address, String number, String email, String group) {
     this.id=null;
     this.firstName = firstName;
     this.lastName = lastName;
