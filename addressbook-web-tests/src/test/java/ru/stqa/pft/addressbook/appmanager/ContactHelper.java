@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,12 +59,22 @@ public class ContactHelper extends HelperBase {
    initNewContactsCreation();
    fillContacts(contacts,true);
   }
+   public void modifyContacts(int index, Contacts contacts) {
+    initContactsModification(index);
+    fillContacts(contacts,false);
+    submitContactsModification();
+  }
 
+  public void deletion(int index) {
+    selectContactsForDeletion(index);
+    initContactsDeletion();
+    submitContactsDeletion();
+  }
   public boolean isThereAContact() {
     return isElementPresent(By.name("selected[]"));
   }
 
-  public List<Contacts> getContactList() {
+  public List<Contacts> list() {
     List <Contacts> contacts =new ArrayList<Contacts>();
     List <WebElement> tableRows = wd.findElements(By.cssSelector("tbody tr[name=\"entry\"]"));
     for (WebElement tableRow: tableRows ){

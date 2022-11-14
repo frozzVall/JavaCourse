@@ -6,7 +6,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.Browser;
 
 public class ApplicationManager {
@@ -51,15 +50,15 @@ public class ApplicationManager {
 
 
 
-  public GroupHelper getGroupHelper() {
+  public GroupHelper group() {
     return groupHelper;
   }
 
-  public NavigationHelper getNavigationHelper() {
+  public NavigationHelper goTo() {
     return navigationHelper;
   }
 
-  public ContactHelper getContactHelper() {
+  public ContactHelper contacts() {
     return contactHelper;
   }
 }
