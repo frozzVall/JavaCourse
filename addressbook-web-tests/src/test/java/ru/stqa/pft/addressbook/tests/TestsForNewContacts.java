@@ -1,12 +1,12 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 
 public class TestsForNewContacts extends TestBase {
@@ -15,25 +15,23 @@ public class TestsForNewContacts extends TestBase {
   public void EnsurePreconditions(){
     app.goTo().groupPage();
     if (app.group().list().size()==0){
-      app.group().create(new GroupData("1", null, null));
+      app.group().create(new GroupData().withName("test1"));
     }
     app.goTo().homePage();
   }
 
   @Test
   public void testSForNewContacts() throws Exception {
-    List<Contacts> before=app.contacts().list();
-    Contacts contacts =new Contacts("liza1", "dlogyv", "uliza gorelika", "+375291567859", "liza709@gmail.com","test1");
+    Set<Contacts> before=app.contacts().all();
+    Contacts contacts =new Contacts().
+            withFirstName("liza").withLastName("dlogyv").withAddress("uliza gorelika").withNumber("+375291567859").withEmail( "liza709@gmail.com");
     app.contacts().createContact(contacts);
     app.goTo().homePage();
-    List<Contacts> after=app.contacts().list();
+    Set<Contacts> after=app.contacts().all();
     Assert.assertEquals(after.size(),before.size()+1);
 
-
+    contacts.withId(after.stream().mapToInt((g) ->g.getId()).max().getAsInt());
     before.add(contacts);
-    Comparator<? super Contacts> byId = (g1, g2) -> Integer.compare(g1.getId(),g2.getId());
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(before,after);
 
   }

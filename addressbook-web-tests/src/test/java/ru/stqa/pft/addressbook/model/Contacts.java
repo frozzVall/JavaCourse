@@ -3,29 +3,66 @@ package ru.stqa.pft.addressbook.model;
 import java.util.Objects;
 
 public class Contacts {
-  private final String firstName;
-  private final String lastName;
-  private final String address;
-  private final String number;
-  private final String email;
-  private final String group;
+  private String firstName;
+  private String lastName;
+  private String address;
+  private String number;
+  private String email;
+  private String group;
+  private int id=Integer.MAX_VALUE;
 
-  public void setId(int id) {
+  public Contacts withId(int id) {
     this.id = id;
+    return this;
   }
-
-  private int id;
-
-
-  public Contacts(int id, String firstName, String lastName, String address, String number, String email, String group) {
-    this.id=id;
+  public Contacts withFirstName(String firstName) {
     this.firstName = firstName;
-    this.lastName = lastName;
-    this.address = address;
-    this.number = number;
-    this.email = email;
-    this.group = group;
+    return this;
   }
+
+  public Contacts withLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
+
+  public Contacts withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public Contacts withNumber(String number) {
+    this.number = number;
+    return this;
+  }
+
+  public Contacts withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Contacts contacts = (Contacts) o;
+
+    if (id != contacts.id) return false;
+    return Objects.equals(firstName, contacts.firstName);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = firstName != null ? firstName.hashCode() : 0;
+    result = 31 * result + id;
+    return result;
+  }
+
+  public Contacts withGroup(String group) {
+    this.group = group;
+    return this;
+  }
+
 
   @Override
   public String toString() {
@@ -40,33 +77,6 @@ public class Contacts {
     return id;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    Contacts contacts = (Contacts) o;
-
-    if (!Objects.equals(firstName, contacts.firstName)) return false;
-    return Objects.equals(lastName, contacts.lastName);
-  }
-
-  @Override
-  public int hashCode() {
-    int result = firstName != null ? firstName.hashCode() : 0;
-    result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-    return result;
-  }
-
-  public Contacts(String firstName, String lastName, String address, String number, String email, String group) {
-    this.id=Integer.MAX_VALUE;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.address = address;
-    this.number = number;
-    this.email = email;
-    this.group = group;
-  }
 
   public String getFirstName() {
     return firstName;

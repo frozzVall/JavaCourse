@@ -8,7 +8,9 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -35,15 +37,22 @@ public class ContactHelper extends HelperBase {
   }
 
   public void initContactsModification(int index) {
+
     wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+  }
+  public void initContactsModificationById(int id) {
+    wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
   }
 
   public void submitContactsModification() {
     click((By.name("update")));
   }
 
-  public void selectContactsForDeletion(int index) {
+  public void selectContacts(int index) {
     wd.findElements(By.name("selected[]")).get(index).click();
+  }
+  public void selectContactsById(int id) {
+    wd.findElement(By.cssSelector("input[value='"+ id +"']")).click();
   }
 
   public void initContactsDeletion() {
@@ -56,17 +65,23 @@ public class ContactHelper extends HelperBase {
 
 
   public void createContact(Contacts contacts) {
-   initNewContactsCreation();
-   fillContacts(contacts,true);
+    initNewContactsCreation();
+    fillContacts(contacts, true);
   }
-   public void modifyContacts(int index, Contacts contacts) {
-    initContactsModification(index);
-    fillContacts(contacts,false);
+
+  public void modify(Contacts contacts) {
+    initContactsModificationById(contacts.getId());
+    fillContacts(contacts, false);
     submitContactsModification();
   }
 
   public void deletion(int index) {
-    selectContactsForDeletion(index);
+    selectContacts(index);
+    initContactsDeletion();
+    submitContactsDeletion();
+  }
+  public void deletion(Contacts contact) {
+    selectContactsById(contact.getId());
     initContactsDeletion();
     submitContactsDeletion();
   }
@@ -75,17 +90,29 @@ public class ContactHelper extends HelperBase {
   }
 
   public List<Contacts> list() {
-    List <Contacts> contacts =new ArrayList<Contacts>();
-    List <WebElement> tableRows = wd.findElements(By.cssSelector("tbody tr[name=\"entry\"]"));
-    for (WebElement tableRow: tableRows ){
+    List<Contacts> contacts = new ArrayList<Contacts>();
+    List<WebElement> tableRows = wd.findElements(By.cssSelector("tbody tr[name=\"entry\"]"));
+    for (WebElement tableRow : tableRows) {
       String lastName = tableRow.findElement(By.cssSelector("td:nth-child(2)")).getText();
       String firstName = tableRow.findElement(By.cssSelector("td:nth-child(3)")).getText();
       int id = Integer.parseInt(tableRow.findElement(By.tagName("input")).getAttribute("value"));
-      Contacts contact = new Contacts(id,firstName,lastName,null,null,null,null);
-      contacts.add(contact);
+      contacts.add(new Contacts().
+              withFirstName("liza").withLastName("dlogyv").withAddress("uliza gorelika").withNumber("+375291567859").withEmail("liza709@gmail.com"));
     }
     return contacts;
+  }
 
+  public Set<Contacts> all() {
+    Set<Contacts> contacts = new HashSet<Contacts>();
+    List<WebElement> tableRows = wd.findElements(By.cssSelector("tbody tr[name=\"entry\"]"));
+    for (WebElement tableRow : tableRows) {
+      String lastName = tableRow.findElement(By.cssSelector("td:nth-child(2)")).getText();
+      String firstName = tableRow.findElement(By.cssSelector("td:nth-child(3)")).getText();
+      int id = Integer.parseInt(tableRow.findElement(By.tagName("input")).getAttribute("value"));
+      contacts.add(new Contacts()
+              .withId(id).withFirstName(firstName).withLastName(lastName).withAddress("uliza gorelika").withNumber("+375291567859").withEmail("liza709@gmail.com"));
+    }
+    return contacts;
   }
 
 }
