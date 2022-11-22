@@ -25,15 +25,27 @@ public class TestsForNewContacts extends TestBase {
   public void testSForNewContacts() throws Exception {
     Contacts1 before= (Contacts1) app.contacts().all();
     Contacts contacts =new Contacts().
-            withFirstName("liza").withLastName("dlogyv").withAddress("uliza gorelika").withNumber("+375291567859").withEmail( "liza709@gmail.com");
+            withFirstName("liza").withLastName("dlogyv").withAddress("uliza gorelika").withHomePhone("+375447867789").withMobilePhone("+375291567859").withWorkPhone("+375291567857").withEmail( "liza709@gmail.com");
     app.contacts().createContact(contacts);
     app.goTo().homePage();
+    assertThat(app.contacts().count(), equalTo(before.size()+1));
     Contacts1 after= (Contacts1) app.contacts().all();
-    assertThat(after.size(), equalTo(before.size()+1));
 
 
     assertThat(after, equalTo(before.
             withAdded(contacts.withId(after.stream().mapToInt((g) ->g.getId()).max().getAsInt()))));
+
+  }
+  @Test
+  public void testBadSForNewContacts() throws Exception {
+    Contacts1 before= (Contacts1) app.contacts().all();
+    Contacts contacts =new Contacts().
+            withFirstName("liza'").withLastName("dlogyv").withAddress("uliza gorelika").withHomePhone("+375447867789").withMobilePhone("+375291567859").withWorkPhone("+375291567857").withEmail( "liza709@gmail.com");
+    app.contacts().createContact(contacts);
+    app.goTo().homePage();
+    assertThat(app.contacts().count(), equalTo(before.size()));
+    Contacts1 after= (Contacts1) app.contacts().all();
+    assertThat(after, equalTo(before));
 
   }
 }

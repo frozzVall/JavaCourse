@@ -3,13 +3,12 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.Contacts1;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class СontactsModificationTests extends TestBase {
+public class ContactsAddressTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
@@ -26,17 +25,14 @@ public class СontactsModificationTests extends TestBase {
   }
 
   @Test
-  public void testContactsModification() {
-    Contacts1 before = app.contacts().all();
-    Contacts modifyContact=before.iterator().next();
-    Contacts contacts = new Contacts().withId(modifyContact.getId()).withFirstName("liza").withLastName("null");
-    app.contacts().modify(contacts);
+  public void testContactsPhones(){
     app.goTo().homePage();
-    assertThat(app.contacts().count(), equalTo(before.size()));
-    Contacts1 after = app.contacts().all();
+    Contacts contacts=app.contacts().all().iterator().next();
+    Contacts contactInfoFromEditForm=app.contacts().infoFromEditForm(contacts);
+    assertThat(contacts.getAddress(), equalTo(cleaned(contactInfoFromEditForm.getAddress())));
+  }
 
-    assertThat(after, equalTo(before.without(modifyContact).withAdded(contacts)));
-
-
+  public static String cleaned(String address ){
+    return address.replaceAll("\\s+$","");
   }
 }
