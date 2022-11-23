@@ -10,12 +10,14 @@ public class Contacts {
   private String homePhone;
   private String workPhone;
   private String allPhones;
+  private String phone2;
 
   private String email;
   private String email2;
   private String email3;
   private String allEmails;
-
+  private String group;
+  private int id=Integer.MAX_VALUE;
   public String getAllEmails() {
     return allEmails;
   }
@@ -34,10 +36,10 @@ public class Contacts {
     return this;
   }
 
-  private String group;
-  private int id=Integer.MAX_VALUE;
-
-
+  public Contacts withPhone2(String phone2) {
+    this.phone2 =phone2;
+    return this;
+  }
   public Contacts withWorkPhone(String workPhone) {
     this.workPhone = workPhone;
     return this;
@@ -103,12 +105,6 @@ public class Contacts {
     return result;
   }
 
-  public Contacts withGroup(String group) {
-    this.group = group;
-    return this;
-  }
-
-
   @Override
   public String toString() {
     return "Contacts{" +
@@ -159,6 +155,9 @@ public class Contacts {
   }
   public String getEmail3() {
     return email3;
+  }
+  public String getPhone2() {
+    return phone2;
   }
 
 }
