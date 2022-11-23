@@ -21,11 +21,11 @@ public class ContactHelper extends HelperBase {
     type(By.name("firstname"), contactsForm.getFirstName());
     type(By.name("lastname"), contactsForm.getLastName());
     type(By.name("address"), contactsForm.getAddress());
-    type(By.name("email"), contactsForm.getHomePhone());
+    type(By.name("home"), contactsForm.getHomePhone());
     type(By.name("mobile"), contactsForm.getMobilePhone());
-    type(By.name("email"), contactsForm.getWorkPhone());
+    type(By.name("work"), contactsForm.getWorkPhone());
     type(By.name("email"), contactsForm.getEmail());
-
+    attach(By.name("photo"), contactsForm.getPhoto());
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByIndex(1);
     } else {

@@ -6,6 +6,8 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.Contacts1;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -24,8 +26,11 @@ public class TestsForNewContacts extends TestBase {
   @Test
   public void testSForNewContacts() throws Exception {
     Contacts1 before= (Contacts1) app.contacts().all();
+    File photo=new File("src/test/resources/1598554256-b6085814-390c-401f-b530-9b5c606a1feb.jpeg");
     Contacts contacts =new Contacts().
-            withFirstName("liza").withLastName("dlogyv").withAddress("uliza gorelika").withHomePhone("+375447867789").withMobilePhone("+375291567859").withWorkPhone("+375291567857").withEmail( "liza709@gmail.com");
+            withFirstName("liza").withLastName("dlogyv").withAddress("uliza gorelika")
+            .withHomePhone("+375447867789").withMobilePhone("+375291567859").withWorkPhone("+375291567857")
+            .withEmail( "liza709@gmail.com").withPhoto(photo);
     app.contacts().createContact(contacts);
     app.goTo().homePage();
     assertThat(app.contacts().count(), equalTo(before.size()+1));
@@ -40,7 +45,9 @@ public class TestsForNewContacts extends TestBase {
   public void testBadSForNewContacts() throws Exception {
     Contacts1 before= (Contacts1) app.contacts().all();
     Contacts contacts =new Contacts().
-            withFirstName("liza'").withLastName("dlogyv").withAddress("uliza gorelika").withHomePhone("+375447867789").withMobilePhone("+375291567859").withWorkPhone("+375291567857").withEmail( "liza709@gmail.com");
+            withFirstName("liza'").withLastName("dlogyv").withAddress("uliza gorelika")
+            .withHomePhone("+375447867789").withMobilePhone("+375291567859").withWorkPhone("+375291567857")
+            .withEmail( "liza709@gmail.com");
     app.contacts().createContact(contacts);
     app.goTo().homePage();
     assertThat(app.contacts().count(), equalTo(before.size()));
