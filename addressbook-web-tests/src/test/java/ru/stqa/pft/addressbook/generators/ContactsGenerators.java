@@ -3,6 +3,9 @@ package ru.stqa.pft.addressbook.generators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.thoughtworks.xstream.XStream;
 import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.io.File;
@@ -17,6 +20,8 @@ public class ContactsGenerators {
   public int count;
   @Parameter(names = "-f", description ="Target file")
   public String file;
+  @Parameter(names = "-d", description ="Data format")
+  public String format;
 
 
 
@@ -33,11 +38,37 @@ public class ContactsGenerators {
   }
 
   private void run() throws IOException {
-    List<Contacts> groups=generateContacts(count);
-    save(groups, new File(file));
+    List<Contacts> contacts=generateContacts(count);
+    if (format.equals("csv")){
+      saveAsCsv(contacts, new File(file));
+    }else if (format.equals("xml")){
+      saveAsXml(contacts, new File(file));
+    }else if (format.equals("json")) {
+      saveAsJson(contacts, new File(file));
+    } else {
+      System.out.println("Unrecognized format"+ format);
+    }
   }
 
-  private static void save(List<Contacts> contacts, File file) throws IOException {
+  private void saveAsJson(List<Contacts> contacts, File file) throws IOException {
+    Gson gson =new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+    String json =gson.toJson(contacts);
+    Writer writer =new FileWriter(file);
+    writer.write(json);
+    writer.close();
+  }
+
+  private void saveAsXml(List<Contacts> contacts, File file) throws IOException {
+    XStream xStream=new XStream();
+    xStream.processAnnotations(Contacts.class);
+    String xml =xStream.toXML(contacts);
+    Writer writer =new FileWriter(file);
+    writer.write(xml);
+    writer.close();
+  }
+
+
+  private static void saveAsCsv(List<Contacts> contacts, File file) throws IOException {
     System.out.println(new File(".").getAbsolutePath());
     Writer writer =new FileWriter(file);
     for (Contacts contacts1: contacts){
