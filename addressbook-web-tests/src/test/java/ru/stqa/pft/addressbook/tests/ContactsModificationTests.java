@@ -9,7 +9,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class СontactsModificationTests extends TestBase {
+public class ContactsModificationTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {

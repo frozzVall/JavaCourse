@@ -53,29 +53,29 @@ public class ContactsGenerators {
   private void saveAsJson(List<Contacts> contacts, File file) throws IOException {
     Gson gson =new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     String json =gson.toJson(contacts);
-    Writer writer =new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    try (Writer writer =new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 
   private void saveAsXml(List<Contacts> contacts, File file) throws IOException {
     XStream xStream=new XStream();
     xStream.processAnnotations(Contacts.class);
     String xml =xStream.toXML(contacts);
-    Writer writer =new FileWriter(file);
-    writer.write(xml);
-    writer.close();
+    try (Writer writer =new FileWriter(file)) {
+      writer.write(xml);
+    }
   }
 
 
   private static void saveAsCsv(List<Contacts> contacts, File file) throws IOException {
     System.out.println(new File(".").getAbsolutePath());
-    Writer writer =new FileWriter(file);
-    for (Contacts contacts1: contacts){
-      writer.write(String.format("%s;%s;%s;%s;%s\n", contacts1.getFirstName(),contacts1.getLastName(),
-              contacts1.getAddress(),contacts1.getMobilePhone(),contacts1.getEmail()));
+    try (Writer writer = new FileWriter(file)) {
+      for (Contacts contacts1 : contacts) {
+        writer.write(String.format("%s;%s;%s;%s;%s\n", contacts1.getFirstName(), contacts1.getLastName(),
+                contacts1.getAddress(), contacts1.getMobilePhone(), contacts1.getEmail()));
+      }
     }
-    writer.close();
   }
 
   private static List<Contacts> generateContacts(int count) {
