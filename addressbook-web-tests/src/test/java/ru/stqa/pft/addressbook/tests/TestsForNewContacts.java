@@ -26,7 +26,7 @@ public class TestsForNewContacts extends TestBase {
   @BeforeMethod
   public void EnsurePreconditions() {
     app.goTo().groupPage();
-    if (app.group().list().size() == 0) {
+    if (app.db().contacts().size() == 0) {
       app.group().create(new GroupData().withName("test1"));
     }
     app.goTo().homePage();
@@ -67,12 +67,12 @@ public class TestsForNewContacts extends TestBase {
   @Test(dataProvider = "validContactsFromJson")
   public void testSForNewContacts(Contacts contacts)
           throws Exception {
-    Contacts1 before = (Contacts1) app.contacts().all();
+    Contacts1 before = (Contacts1) app.db().contacts();
     File photo = new File("src/test/resources/1598554256-b6085814-390c-401f-b530-9b5c606a1feb.jpeg");
     app.contacts().createContact(contacts);
     app.goTo().homePage();
     assertThat(app.contacts().count(), equalTo(before.size() + 1));
-    Contacts1 after = (Contacts1) app.contacts().all();
+    Contacts1 after = (Contacts1) app.db().contacts();
 
 
     assertThat(after, equalTo(before.
@@ -80,9 +80,9 @@ public class TestsForNewContacts extends TestBase {
 
   }
 
-  @Test
+  @Test(enabled = false)
   public void testBadSForNewContacts() throws Exception {
-    Contacts1 before = (Contacts1) app.contacts().all();
+    Contacts1 before = (Contacts1) app.db().contacts();
     Contacts contacts = new Contacts().
             withFirstName("liza'").withLastName("dlogyv").withAddress("uliza gorelika")
             .withHomePhone("+375447867789").withMobilePhone("+375291567859").withWorkPhone("+375291567857")
@@ -90,7 +90,7 @@ public class TestsForNewContacts extends TestBase {
     app.contacts().createContact(contacts);
     app.goTo().homePage();
     assertThat(app.contacts().count(), equalTo(before.size()));
-    Contacts1 after = (Contacts1) app.contacts().all();
+    Contacts1 after = (Contacts1) app.db().contacts();
     assertThat(after, equalTo(before));
 
   }
