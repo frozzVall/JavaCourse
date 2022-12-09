@@ -6,8 +6,8 @@ import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import ru.stqa.pft.addressbook.model.Contact;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.Contacts1;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.io.BufferedReader;
@@ -22,7 +22,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class TestsForNewContacts extends TestBase {
+public class TestsForNewContact extends TestBase {
   @BeforeMethod
   public void EnsurePreconditions() {
     app.goTo().groupPage();
@@ -42,9 +42,9 @@ public class TestsForNewContacts extends TestBase {
         line = reader.readLine();
       }
       XStream xStream = new XStream();
-      xStream.processAnnotations(Contacts.class);
-      xStream.allowTypes(new Class[]{Contacts.class});
-      List<Contacts> contacts = (List<Contacts>) xStream.fromXML(xml);
+      xStream.processAnnotations(Contact.class);
+      xStream.allowTypes(new Class[]{Contact.class});
+      List<Contact> contacts = (List<Contact>) xStream.fromXML(xml);
       return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
@@ -59,38 +59,38 @@ public class TestsForNewContacts extends TestBase {
         line = reader.readLine();
       }
       Gson gson = new Gson();
-      List<Contacts> contacts = gson.fromJson(json, new TypeToken<List<Contacts>>() {
+      List<Contact> contacts = gson.fromJson(json, new TypeToken<List<Contact>>() {
       }.getType());
       return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
   @Test(dataProvider = "validContactsFromJson")
-  public void testSForNewContacts(Contacts contacts)
+  public void testSForNewContacts(Contact contact)
           throws Exception {
-    Contacts1 before = (Contacts1) app.db().contacts();
+    Contacts before = (Contacts) app.db().contacts();
     File photo = new File("src/test/resources/1598554256-b6085814-390c-401f-b530-9b5c606a1feb.jpeg");
-    app.contacts().createContact(contacts);
+    app.getContactsHelper().createContact(contact);
     app.goTo().homePage();
-    assertThat(app.contacts().count(), equalTo(before.size() + 1));
-    Contacts1 after = (Contacts1) app.db().contacts();
+    assertThat(app.getContactsHelper().count(), equalTo(before.size() + 1));
+    Contacts after = (Contacts) app.db().contacts();
 
 
     assertThat(after, equalTo(before.
-            withAdded(contacts.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
-
+            withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    verifyContactsInUI();
   }
 
   @Test(enabled = false)
   public void testBadSForNewContacts() throws Exception {
-    Contacts1 before = (Contacts1) app.db().contacts();
-    Contacts contacts = new Contacts().
+    Contacts before = (Contacts) app.db().contacts();
+    Contact contact = new Contact().
             withFirstName("liza'").withLastName("dlogyv").withAddress("uliza gorelika")
             .withHomePhone("+375447867789").withMobilePhone("+375291567859").withWorkPhone("+375291567857")
             .withEmail("liza709@gmail.com");
-    app.contacts().createContact(contacts);
+    app.getContactsHelper().createContact(contact);
     app.goTo().homePage();
-    assertThat(app.contacts().count(), equalTo(before.size()));
-    Contacts1 after = (Contacts1) app.db().contacts();
+    assertThat(app.getContactsHelper().count(), equalTo(before.size()));
+    Contacts after = (Contacts) app.db().contacts();
     assertThat(after, equalTo(before));
 
   }

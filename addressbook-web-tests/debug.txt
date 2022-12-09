@@ -2349,7 +2349,7 @@
 2022-11-29T20:55:15.797+0300 [DEBUG] [TestEventLogger] 
 2022-11-29T20:55:15.797+0300 [DEBUG] [TestEventLogger]         Caused by:
 2022-11-29T20:55:15.797+0300 [DEBUG] [TestEventLogger]         org.testng.TestNGException: 
-2022-11-29T20:55:15.797+0300 [DEBUG] [TestEventLogger]         An error occurred while instantiating class ru.stqa.pft.addressbook.tests.TestsForNewContacts: null
+2022-11-29T20:55:15.797+0300 [DEBUG] [TestEventLogger]         An error occurred while instantiating class ru.stqa.pft.addressbook.tests.TestsForNewContact: null
 2022-11-29T20:55:15.797+0300 [DEBUG] [TestEventLogger]             at org.testng.internal.InstanceCreator.createInstanceUsingObjectFactory(InstanceCreator.java:123)
 2022-11-29T20:55:15.797+0300 [DEBUG] [TestEventLogger]             at org.testng.internal.InstanceCreator.createInstance(InstanceCreator.java:79)
 2022-11-29T20:55:15.797+0300 [DEBUG] [TestEventLogger]             at org.testng.internal.objects.SimpleObjectDispenser.dispense(SimpleObjectDispenser.java:25)

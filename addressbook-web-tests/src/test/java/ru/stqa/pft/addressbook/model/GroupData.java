@@ -5,11 +5,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 @Entity
 @Table (name= "group_list")
 @XStreamAlias("group")
@@ -29,6 +29,13 @@ public class GroupData {
   @Type(type ="text")
   @Column(name ="group_footer")
   private  String footer;
+
+  public Contacts getContacts() {
+    return new Contacts(contacts);
+  }
+
+  @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
+  private Set<Contact> contacts =new HashSet<Contact>();
 
   public GroupData withId(int id) {
     this.id = id;

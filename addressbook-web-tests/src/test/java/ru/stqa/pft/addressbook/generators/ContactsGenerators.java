@@ -6,7 +6,7 @@ import com.beust.jcommander.ParameterException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
-import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Contact;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -38,7 +38,7 @@ public class ContactsGenerators {
   }
 
   private void run() throws IOException {
-    List<Contacts> contacts=generateContacts(count);
+    List<Contact> contacts=generateContacts(count);
     if (format.equals("csv")){
       saveAsCsv(contacts, new File(file));
     }else if (format.equals("xml")){
@@ -50,7 +50,7 @@ public class ContactsGenerators {
     }
   }
 
-  private void saveAsJson(List<Contacts> contacts, File file) throws IOException {
+  private void saveAsJson(List<Contact> contacts, File file) throws IOException {
     Gson gson =new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
     String json =gson.toJson(contacts);
     try (Writer writer =new FileWriter(file)) {
@@ -58,9 +58,9 @@ public class ContactsGenerators {
     }
   }
 
-  private void saveAsXml(List<Contacts> contacts, File file) throws IOException {
+  private void saveAsXml(List<Contact> contacts, File file) throws IOException {
     XStream xStream=new XStream();
-    xStream.processAnnotations(Contacts.class);
+    xStream.processAnnotations(Contact.class);
     String xml =xStream.toXML(contacts);
     try (Writer writer =new FileWriter(file)) {
       writer.write(xml);
@@ -68,20 +68,20 @@ public class ContactsGenerators {
   }
 
 
-  private static void saveAsCsv(List<Contacts> contacts, File file) throws IOException {
+  private static void saveAsCsv(List<Contact> contacts, File file) throws IOException {
     System.out.println(new File(".").getAbsolutePath());
     try (Writer writer = new FileWriter(file)) {
-      for (Contacts contacts1 : contacts) {
-        writer.write(String.format("%s;%s;%s;%s;%s\n", contacts1.getFirstName(), contacts1.getLastName(),
-                contacts1.getAddress(), contacts1.getMobilePhone(), contacts1.getEmail()));
+      for (Contact contact1 : contacts) {
+        writer.write(String.format("%s;%s;%s;%s;%s\n", contact1.getFirstName(), contact1.getLastName(),
+                contact1.getAddress(), contact1.getMobilePhone(), contact1.getEmail()));
       }
     }
   }
 
-  private static List<Contacts> generateContacts(int count) {
-    List<Contacts> contacts=new ArrayList<Contacts>();
+  private static List<Contact> generateContacts(int count) {
+    List<Contact> contacts=new ArrayList<Contact>();
     for(int i=0;i<count; i++){
-      contacts.add(new Contacts().withFirstName(String.format("Jin %s",i))
+      contacts.add(new Contact().withFirstName(String.format("Jin %s",i))
               .withLastName(String.format("Wang %s",i)).withAddress(String.format("ul gorelika %s",i)).withMobilePhone(String.format("+355776678 %s",i)).withEmail(String.format("jin1995@gmail.com",i)));
 
     }

@@ -5,8 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.stqa.pft.addressbook.model.Contact;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.Contacts1;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
@@ -33,12 +33,12 @@ public class DbHelper {
     session.close();
     return new Groups(result);
   }
-  public Contacts1 contacts() {
+  public Contacts contacts() {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
-    List<Contacts> result = session.createQuery("from Contacts").list();
+    List<Contact> result = session.createQuery("from Contact").list();
     session.getTransaction().commit();
     session.close();
-    return new Contacts1(result);
+    return new Contacts(result);
   }
 }

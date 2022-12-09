@@ -8,30 +8,28 @@ import ru.stqa.pft.addressbook.model.Groups;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class GroupModificationTests extends TestBase{
+public class GroupModificationTests extends TestBase {
 
   @BeforeMethod
-  public void ensurePreconditions(){
-    if (app.db().groups().size()==0){
+  public void ensurePreconditions() {
+    if (app.db().groups().size() == 0) {
       app.goTo().groupPage();
       app.group().create(new GroupData().withName("test"));
     }
-    }
-
+  }
 
 
   @Test
-  public void testGroupModification(){
-    Groups before=app.db().groups();
-    GroupData modifiedGroup=before.iterator().next();
-    GroupData group=new GroupData().
+  public void testGroupModification() {
+    Groups before = app.db().groups();
+    GroupData modifiedGroup = before.iterator().next();
+    GroupData group = new GroupData().
             withId(modifiedGroup.getId()).withName("test").withHeader("test1").withFooter("test2");
     app.group().modify(group);
-    assertThat(app.group().count(),equalTo(before.size()));
-    Groups after=app.db().groups();
-
+    assertThat(app.group().count(), equalTo(before.size()));
+    Groups after = app.db().groups();
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
+    verifyGroupListInUI();
   }
-
 }
 
