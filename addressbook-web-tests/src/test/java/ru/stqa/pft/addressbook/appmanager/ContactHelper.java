@@ -144,7 +144,7 @@ public class ContactHelper extends HelperBase {
             .withAddress(address);
   }
 
-  public void addContactToFirstGroup(Contact contact, GroupData group) {
+  public void addContactToGroup(Contact contact, GroupData group) {
     selectContactsById(contact.getId());
     clickAddContactToGroup(group);
   }

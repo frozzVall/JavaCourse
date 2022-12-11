@@ -30,18 +30,26 @@ public class AddingContactToGroup extends TestBase {
     Groups firstContactGroupsBefore = firstContactBefore.getGroups();
 
     GroupData groupToAdd = app.db().groups().stream()
-            .filter(i -> !firstContactGroupsBefore.contains(i))
+           // .filter(i -> !firstContactGroupsBefore.contains(i))
             .findFirst()
             .orElse(null);
 
-    app.getContactsHelper().addContactToFirstGroup(firstContactBefore, groupToAdd);
+    app.getContactsHelper().addContactToGroup(firstContactBefore, groupToAdd);
 
     Contacts contactsAfter = app.db().contacts();
     Contact firstContactAfter = contactsAfter.stream().findFirst().orElse(null);
     Groups firstContactGroupsAfter = firstContactAfter.getGroups();
-
-    Assert.assertEquals(
+    Contacts contacts =app.db().contacts();
+    Groups groups=app.db().groups();
+    if(contacts.size()==1&&groups.size()==1
+            &&(contacts.stream().findFirst().get().getGroups().contains(groupToAdd))) {
+          Assert.assertEquals(
             firstContactGroupsBefore.stream().count(),
-            firstContactGroupsAfter.stream().count() - 1);
+            firstContactGroupsAfter.stream().count());}
+    else {
+      Assert.assertEquals(
+              firstContactGroupsBefore.stream().count(),
+              firstContactGroupsAfter.stream().count()-1);}
+      }
   }
-}
+
